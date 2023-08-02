@@ -1,8 +1,13 @@
-# React + Vite
+# Cargo Tracking System 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a group project by Coding Titan Group
 
-Currently, two official plugins are available:
+## How to contribute
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Clone this repo ```git clone https://github.com/chrisjrocen/cargo-tracking-system```
+2. Create a new branch off the main ```git checkout -b [new-branch] main```
+3. Make necessary changes in your new branch.
+4. After that add and commit your changes ```git add .``` followed by ```git commit -m "your commit message"```
+5. If your are ready, then push the new branch to the remote repository ```git push -u origin [new-branch]:[new-branch]```
+6. Then create a Pull Request targeting the main branch
+
