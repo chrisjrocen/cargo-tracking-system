@@ -11,3 +11,9 @@ This is a group project by Coding Titan Group
 5. If your are ready, then push the new branch to the remote repository ```git push -u origin [new-branch]:[new-branch]```
 6. Then create a Pull Request targeting the main branch
 
+
+## Tailwind
+
+Tailwind is now setup on the project. To start using it, run the command ```npm run dev``` in the project directory and starting using Tailwind. 
+
+For instructions on how to install Tailwind, visit [Tailwind Documentation](https://tailwindcss.com/docs/guides/vite)
