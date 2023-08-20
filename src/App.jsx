@@ -3,6 +3,8 @@ import { useState } from 'react'
 import './App.css'
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Hero from "./components/Hero";
+import Search from "./components/Search";
 
 function App() {
   const [count, setCount] = useState(0)
@@ -11,12 +13,9 @@ function App() {
     <>
       <div>
         <Header />
+        <Search />
       </div>
-      <div className='h-screen'>
-        <h1>carTTrack</h1>
-        <p>Cargo Tracking Software</p>
-        <code>Coming soon...</code>
-      </div>
+      <Hero />
       <div>
         <Footer />
       </div>
