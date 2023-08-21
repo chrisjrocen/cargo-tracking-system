@@ -1,32 +1,60 @@
-function Search() {
-  return (
-      <div className="pb-2 pt-2 bg-white px-10">
-          <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-              <input
-                  type="search"
-                  className="relative m-0 block flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-black-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-                  placeholder="input tracking code"
-                  aria-label="Search"
-                  aria-describedby="button-addon2" />
+import React, { useEffect, useState } from "react";
 
-              {/* <!--Search icon--> */}
-              <span
-                  className="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-neutral-700 dark:text-neutral-200"
-                  id="basic-addon2">
-                  <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="h-5 w-5">
-                      <path
-                          fillRule="evenodd"
-                          d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                          clipRule="evenodd" />
-                  </svg>
-              </span>
-          </div>
-      </div>
-  );
+function Search() {
+
+    const [shipments, setShipments] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const apiUrl = "http://localhost:1337/api/shipments";
+
+    useEffect(() => {
+        fetch(apiUrl)
+            .then((response) => {
+                return response.json();
+            })
+            .then((response) => {
+                console.log(response);
+                setShipments(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
+    const filteredShipments = shipments.filter((shipment) =>
+        shipment.attributes.trackingCode.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    return (
+        <div className="mx-auto max-w-5xl flex flex-col justify-start sm:py-4 lg:py-4">
+            <div className="mx-auto flex justify-start gap-x-6">
+                <input
+                    type="text"
+                    placeholder="Enter tracking code..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="rounded-md border px-3 py-2 text-sm focus:outline-none focus:border-indigo-600"
+                />
+            </div>
+            {filteredShipments.length > 0 ? (
+                <div>
+                    <div
+                        className="block rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+                        <h5
+                            className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
+                            {filteredShipments[0].attributes.trackingCode}<span
+                                className="inline-block whitespace-nowrap rounded-[0.27rem] bg-slate-400 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700"
+                            >{filteredShipments[0].attributes.shippingStatus}</span>
+                        </h5>
+                        <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
+                            {filteredShipments[0].attributes.shipmentDetails}
+                        </p>
+                    </div>
+                    <p className="text-black">Last updated: {filteredShipments[0].attributes.updatedAt}</p>
+                </div>
+            ) : (
+                <p className="text-black">No matching shipments found.</p>
+            )}
+        </div>
+    );
 }
 
-export default  Search
+export default Search

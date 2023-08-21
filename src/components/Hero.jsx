@@ -5,7 +5,6 @@ function Hero() {
 
             <div className="relative isolate px-6 lg:px-8">
 
-                
                 <div className="mx-auto max-w-5xl py-32 flex sm:py-48 lg:py-56 ">
 
                     <div className="text-left">
