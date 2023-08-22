@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function Hero() {
 
     return (
@@ -12,15 +14,14 @@ function Hero() {
                             Fast Reliable and Convenient delivery
                         </h1>
                         <div className="mt-10 flex items-center justify-left gap-x-6">
-                            <a
-                                href="#"
+                            <Link to="./search"
                                 className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
                                 Get started
-                            </a>
-                            <a href="#" className="text-sm font-semibold leading-6 text-gray-900"><span aria-hidden="true">→</span>
+                            </Link>
+                            <Link to="./search" className="text-sm font-semibold leading-6 text-gray-900"><span aria-hidden="true">→</span>
                                 Track your order 
-                            </a>
+                            </Link>
                         </div>
                     </div>
                     <div className="">
