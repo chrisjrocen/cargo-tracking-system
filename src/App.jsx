@@ -13,13 +13,11 @@ function App() {
     <>
       <div>
         <Header />
-        <Search />
       </div>
       <Hero />
       <div>
         <Footer />
       </div>
-
     </>
   )
 }
