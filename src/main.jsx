@@ -5,6 +5,7 @@ import App from './App.jsx'
 import './index.css'
 import About from "./components/About.jsx"
 import Search from "./components/Search.jsx"
+import Submit from './components/Submit.jsx'
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/search",
     element: <Search/>
+  },
+  {
+    path: "/submit",
+    element: <Submit/>
   }
 ])
 
