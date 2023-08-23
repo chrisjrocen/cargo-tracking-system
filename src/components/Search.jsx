@@ -3,63 +3,75 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 function Search() {
-
     const [shipments, setShipments] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const apiUrl = "http://localhost:1337/api/shipments";
 
     useEffect(() => {
+        if (searchTerm.trim() === "") {
+            setShipments([]);
+            return;
+        }
+
         fetch(apiUrl)
+            .then((response) => response.json())
             .then((response) => {
-                return response.json();
-            })
-            .then((response) => {
-                console.log(response);
                 setShipments(response.data);
             })
             .catch((error) => {
                 console.log(error);
             });
-    }, []);
+    }, [searchTerm]);
 
     const filteredShipments = shipments.filter((shipment) =>
         shipment.attributes.trackingCode.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
     return (
         <>
             <Header />
-            <div className="bg-white ">
-                <div className="relative isolate px-6 lg:px-8">
-                <div className="mx-auto max-w-5xl py-32 sm:py-48 lg:py-56">
-                    <div className="mx-auto justify-stretch gap-x-6">
-                        <input
-                            type="text"
-                            placeholder="Enter tracking code..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="rounded-md border px-3 py-2 text-sm focus:outline-none focus:border-indigo-600"
-                        />
-                    </div>
-                    {filteredShipments.length > 0 ? (
-                        <div>
-                            <div
-                                className="block rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-                                <h5
-                                    className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-                                    {filteredShipments[0].attributes.trackingCode}<span
-                                        className="inline-block whitespace-nowrap rounded-[0.27rem] bg-slate-400 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700"
-                                    >{filteredShipments[0].attributes.shippingStatus}</span>
-                                </h5>
-                                <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
+            <div className="bg-gray-100 min-h-screen py-12">
+                <div className="container mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+                    <div className="bg-white rounded-lg shadow-xl overflow-hidden">
+                        <div className="p-6 sm:p-8">
+                            <input
+                                type="text"
+                                placeholder="Search by tracking code..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="w-full py-2 px-4 rounded-lg border focus:outline-none focus:border-indigo-600"
+                            />
+                        </div>
+                        {searchTerm && filteredShipments.length > 0 && (
+                            <div className="p-6 border-t">
+                                <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                                    {filteredShipments[0].attributes.trackingCode}
+                                    <span className="inline-block ml-2 px-2 py-1 text-xs font-semibold bg-indigo-600 text-white rounded">
+                                        {filteredShipments[0].attributes.shippingStatus}
+                                    </span>
+                                </h2>
+                                <p className="text-gray-600 mb-4">
                                     {filteredShipments[0].attributes.shipmentDetails}
                                 </p>
+                                <p className="text-gray-600">
+                                    Order date and time: {new Date(filteredShipments[0].attributes.createdAt).toLocaleString()}
+                                </p>
+                                <p className="text-gray-600 mt-2">
+                                    Last updated: {new Date(filteredShipments[0].attributes.updatedAt).toLocaleString()}
+                                </p>
                             </div>
-                            <p className="text-black">Last updated: {new Date(filteredShipments[0].attributes.updatedAt).toLocaleString()}</p>
-                        </div>
-                    ) : (
-                        <p className="text-black">No matching shipments found.</p>
-                    )}
-                </div>
+                        )}
+                        {!searchTerm && (
+                            <div className="p-6 border-t">
+                                <p className="text-gray-600">Enter a tracking code to search.</p>
+                            </div>
+                        )}
+                        {searchTerm && filteredShipments.length === 0 && (
+                            <div className="p-6 border-t">
+                                <p className="text-gray-600">No matching shipments found.</p>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
             <Footer />
@@ -67,4 +79,4 @@ function Search() {
     );
 }
 
-export default Search
+export default Search;

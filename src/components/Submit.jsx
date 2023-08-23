@@ -4,13 +4,12 @@ import Footer from './Footer';
 import { TEInput } from "tw-elements-react";
 import React, { useState } from 'react';
 
-
-
 function Submit() {
 
     const [productName, setProductName] = useState('');
-    const [quantity, setQuantity] = useState(0);
-    const [price, setPrice] = useState(0);
+    const [quantity, setQuantity] = useState();
+    const [price, setPrice] = useState(); 
+    const [trackingCode, setTrackingCode] = useState();   
 
     const apiUrl = 'http://localhost:1337/api/shipments';
 
@@ -20,46 +19,54 @@ function Submit() {
     };
 
 
-const handleSubmit = async () => {
-    // if (!productName || !quantity || !price) {
-    //   alert('Please fill in all fields.');
-    //   return;
-    // }
-  
-    const shipmentData = {
-      productName,
-      quantity,
-      price,
-      trackingCode: generateRandomCode(),
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+    
+        if (!quantity) {
+            alert('Please fill out the Quantity field.');
+            return;
+        }
+    
+        const shipmentData = {
+            productName,
+            quantity,
+            price,
+            trackingCode: generateRandomCode(),
+        };
+    
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ data: shipmentData }),
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error('API Error:', errorData);
+                alert('Failed to submit order. Please check the console for details.');
+                return;
+            }
+    
+            const responseData = await response.json();
+            const submittedTrackingCode = responseData.data.trackingCode; // Access trackingCode from responseData.data
+            setTrackingCode(submittedTrackingCode);
+            console.log(submittedTrackingCode)
+    
+            const successMessage = `Order submitted successfully! Tracking Code: ${submittedTrackingCode}`;
+            alert(successMessage);
+    
+            setProductName('');
+            setQuantity(0);
+            setPrice(0);
+        } catch (error) {
+            console.error('Error submitting order:', error);
+            alert('An error occurred while submitting the order. Please check the console for details.');
+        }
     };
-  
-    try {
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(shipmentData),
-      });
-  
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error('API Error:', errorData);
-        alert('Failed to submit order. Please check the console for details.');
-        return;
-      }
-  
-      const responseData = await response.json();
-      setTrackingCode(responseData.trackingCode);
-      alert('Order submitted successfully!');
-      setProductName('');
-      setQuantity(0);
-      setPrice(0);
-    } catch (error) {
-      console.error('Error submitting order:', error);
-      alert('An error occurred while submitting the order. Please check the console for details.');
-    }
-  };
+        
   
   
     return (
@@ -68,7 +75,7 @@ const handleSubmit = async () => {
 
                 <div className="relative isolate px-6 lg:px-8">
 
-                    <div className="mx-auto py-32 flex">
+                    <div className="mx-auto max-w-5xl py-32 flex sm:py-48 lg:py-56 ">
 
                         <div>
 
@@ -81,6 +88,8 @@ const handleSubmit = async () => {
                                         type="text"
                                         id="productName"
                                         placeholder="Product name"
+                                        required
+                                        onChange={(e) => setProductName(e.target.value)}
                                     ></TEInput>
                                 </div>
                             </div>
@@ -90,6 +99,8 @@ const handleSubmit = async () => {
                                         type="number"
                                         id="quantity"
                                         placeholder="Quantity"
+                                        onChange={(e) => setQuantity(e.target.value)}
+                                        required
                                     ></TEInput>
                                 </div>
                             </div>
@@ -99,6 +110,8 @@ const handleSubmit = async () => {
                                         type="number"
                                         id="price"
                                         placeholder="Price"
+                                        required
+                                        onChange={(e) => setPrice(e.target.value)}
                                     ></TEInput>
                                 </div>
                                 
@@ -112,6 +125,11 @@ const handleSubmit = async () => {
                                     Submit Order
                                 </button>
                             </div>
+                            {trackingCode && (
+                                <div className="mt-4 text-green-600">
+                                    Tracking Code: {trackingCode}
+                                </div>
+                            )}
                         </div>
                         <div className="">
                             <img className="h-auto max-w-full" src="./src/assets/hero-image.png" alt="image" />
