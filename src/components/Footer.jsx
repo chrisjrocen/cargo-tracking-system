@@ -4,7 +4,9 @@ import React from 'react';
 function Footer() {
 
     return (
-        <footer className="bg-gray-200 py-6 text-black text-left">
+        <footer className="bg-gray-200 hover:bg-gray-300 active:bg-gray-400 focus:outline-none focus:ring focus:ring-gray-500 py-6 text-black text-left ">
+
+
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {/* Column 1 */}
