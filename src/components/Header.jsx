@@ -13,7 +13,7 @@ function Header() {
                 <div className="flex items-center space-x-4">
                     {/* Menu items go here */}
                     <nav className="flex sm:justify-center space-x-4">
-                        <ul className='grid md:grid-cols-2'>
+                        <ul className='grid md:grid-cols-4'>
                             <li className='rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900'><Link to="/">Home</Link></li>
                             <li className='rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900'><Link to="/search">Track orders</Link></li>
                             <li className='rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900'><Link to="/submit">Submit new order</Link></li>
