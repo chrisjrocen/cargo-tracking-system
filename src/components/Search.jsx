@@ -66,14 +66,9 @@ function Search() {
                                                             <td class="whitespace-nowrap px-6 py-4 font-medium">Details:</td>
                                                             <td class="whitespace-nowrap px-6 py-4">{filteredShipments[0].attributes.details}</td>
                                                         </tr>
-                                                        <tr class="border-b dark:border-neutral-500  text-gray-800">
-                                                            <td class="whitespace-nowrap px-6 py-4 font-medium">Last update:</td>
-                                                            <td class="whitespace-nowrap px-6 py-4">{filteredShipments[0].attributes.details}</td>
-                                                        </tr>
-
                                                     </tbody>
                                                 </table>
-                                                <p className="text-gray-800">                                                Last updated: {new Date(filteredShipments[0].attributes.updatedAt).toLocaleString()}
+                                                <p className="text-gray-800"> Last updated: {new Date(filteredShipments[0].attributes.updatedAt).toLocaleString()}
                                                 </p>
                                             </div>
                                         </div>
