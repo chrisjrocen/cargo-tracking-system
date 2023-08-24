@@ -6,6 +6,8 @@ import './index.css'
 import About from "./components/About.jsx"
 import Search from "./components/Search.jsx"
 import Submit from './components/Submit.jsx'
+import LoginPage from './components/Login.jsx'
+import SignupPage from './components/Signup.jsx'
 
 const router = createBrowserRouter([
   {
@@ -23,7 +25,16 @@ const router = createBrowserRouter([
   {
     path: "/submit",
     element: <Submit/>
+  },
+  {
+    path: "/login",
+    element: <LoginPage/>
+  },
+  {
+    path: "/signup",
+    element: <SignupPage />
   }
+
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -22,12 +22,14 @@ function Header() {
                     </nav>
                 </div>
                 <div className="flex items-center space-x-4">
+                    <Link to="/login">
                     <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
                         Login
-                    </button>
+                    </button></Link>
+                    <Link to="/signup">
                     <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
                         Sign up
-                    </button>
+                    </button></Link>
                 </div>
             </header>
     )
