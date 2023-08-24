@@ -9,7 +9,8 @@ function Submit() {
     const [productName, setProductName] = useState('');
     const [quantity, setQuantity] = useState();
     const [price, setPrice] = useState(); 
-    const [trackingCode, setTrackingCode] = useState();   
+    const [trackingCode, setTrackingCode] = useState(); 
+    const [details, setDetails] = useState();  
 
     const apiUrl = 'http://localhost:1337/api/shipments';
 
@@ -17,6 +18,8 @@ function Submit() {
         const randomDigits = Math.floor(1000 + Math.random() * 9000);
         return `id-${randomDigits}`;
     };
+
+    
 
 
     const handleSubmit = async (event) => {
@@ -26,12 +29,15 @@ function Submit() {
             alert('Please fill out the Quantity field.');
             return;
         }
+        const finalCode = generateRandomCode();
+    console.log(finalCode);
     
         const shipmentData = {
             productName,
             quantity,
             price,
-            trackingCode: generateRandomCode(),
+            details,
+            trackingCode: finalCode,
         };
     
         try {
@@ -55,12 +61,14 @@ function Submit() {
             setTrackingCode(submittedTrackingCode);
             console.log(submittedTrackingCode)
     
-            const successMessage = `Order submitted successfully! Tracking Code: ${submittedTrackingCode}`;
+            const successMessage = `Order submitted successfully! Tracking Code: ${finalCode}`;
             alert(successMessage);
     
             setProductName('');
             setQuantity(0);
             setPrice(0);
+            setDetails('');
+            setTrackingCode('')
         } catch (error) {
             console.error('Error submitting order:', error);
             alert('An error occurred while submitting the order. Please check the console for details.');
@@ -116,6 +124,18 @@ function Submit() {
                                 </div>
                                 
                             </div>
+                            <div className="mt-10 rounded-md items-center br- bg-slate-600 justify-left gap-x-6">
+                                <div className="relative border-l-neutral-950 mb-3 xl:w-96 ">
+                                    <TEInput className='h-20 flex-wrap'
+                                        type="textarea"
+                                        id="details"
+                                        placeholder="Enter details here"
+                                        required
+                                        onChange={(e) => setDetails(e.target.value)}
+                                    ></TEInput>
+                                </div>
+                                
+                            </div>
 
                             <div className="mt-10 flex items-center justify-left gap-x-6">
                                 <button
@@ -127,7 +147,7 @@ function Submit() {
                             </div>
                             {trackingCode && (
                                 <div className="mt-4 text-green-600">
-                                    Tracking Code: {trackingCode}
+                                    Product submitted successfully
                                 </div>
                             )}
                         </div>

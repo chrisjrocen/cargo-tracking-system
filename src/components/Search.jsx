@@ -44,21 +44,36 @@ function Search() {
                         </div>
                         {searchTerm && filteredShipments.length > 0 && (
                             <div className="p-6 border-t">
-                                <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                                    {filteredShipments[0].attributes.trackingCode}
-                                    <span className="inline-block ml-2 px-2 py-1 text-xs font-semibold bg-indigo-600 text-white rounded">
-                                        {filteredShipments[0].attributes.shippingStatus}
-                                    </span>
-                                </h2>
-                                <p className="text-gray-600 mb-4">
-                                    {filteredShipments[0].attributes.shipmentDetails}
-                                </p>
-                                <p className="text-gray-600">
-                                    Order date and time: {new Date(filteredShipments[0].attributes.createdAt).toLocaleString()}
-                                </p>
-                                <p className="text-gray-600 mt-2">
-                                    Last updated: {new Date(filteredShipments[0].attributes.updatedAt).toLocaleString()}
-                                </p>
+                                <div class="flex flex-col">
+                                    <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                        <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                                            <div class="overflow-hidden">
+                                                <table class="min-w-full text-left text-sm">
+                                                    <thead class="border-b font-medium text-gray-800 dark:border-neutral-500">
+                                                        <tr>
+                                                            <th scope="col" class="px-6 py-4">#</th>
+                                                            <th scope="col" class="px-6 py-4">{filteredShipments[0].attributes.trackingCode}</th>
+                                                            <th scope="col" class="px-6 py-4 "> <span className="inline-block ml-2 px-2 py-1 text-xs font-semibold bg-indigo-600 text-white rounded">{filteredShipments[0].attributes.shippingStatus}</span> at {new Date(filteredShipments[0].attributes.createdAt).toLocaleString()}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="border-b dark:border-neutral-500  text-gray-800">
+                                                            <td class="whitespace-nowrap px-6 py-4 font-medium">Product</td>
+                                                            <td class="whitespace-nowrap px-6 py-4">{filteredShipments[0].attributes.productName}</td>
+                                                            <td class="whitespace-nowrap px-6 py-4">UGX {filteredShipments[0].attributes.price}</td>
+                                                        </tr>
+                                                        <tr class="border-b dark:border-neutral-500  text-gray-800">
+                                                            <td class="whitespace-nowrap px-6 py-4 font-medium">Details:</td>
+                                                            <td class="whitespace-nowrap px-6 py-4">{filteredShipments[0].attributes.details}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <p className="text-gray-800"> Last updated: {new Date(filteredShipments[0].attributes.updatedAt).toLocaleString()}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         )}
                         {!searchTerm && (
